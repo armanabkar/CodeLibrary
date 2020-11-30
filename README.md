@@ -2,6 +2,11 @@
 
 A library for sharing reusable components. Using React, Django, GraphQL & ReactMaterialUI.
 
+<h2 align="center">
+  <img src="./screenshot.png" alt="sapper-blog-template" width="600px" />
+  <br>
+</h2>
+
 ## Installation & Usage
 
 1. Clone the repository
