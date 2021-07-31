@@ -17,25 +17,25 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { UserContext } from "../../Root";
 import Error from "../Shared/Error";
 
-const UpdateComponent = ({ classes, component }) => {
+const AddCode = ({ classes, code }) => {
   const currentUser = useContext(UserContext);
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState(component.title);
-  const [description, setDescription] = useState(component.description);
-  const [code, setCode] = useState(component.code);
+  const [title, setTitle] = useState(code.title);
+  const [description, setDescription] = useState(code.description);
+  const [currentCode, setCode] = useState(code.code);
   const [submitting, setSubmitting] = useState(false);
-  const isCurrentUser = currentUser.id === component.postedBy.id;
+  const isCurrentUser = currentUser.id === code.postedBy.id;
 
-  const handleSubmit = async (event, updateComponent) => {
+  const handleSubmit = async (event, updateCode) => {
     event.preventDefault();
     setSubmitting(true);
 
-    updateComponent({
+    updateCode({
       variables: {
-        componentId: component.id,
+        codeId: code.id,
         title,
         description,
-        code,
+        code: currentCode,
       },
     });
   };
@@ -43,14 +43,12 @@ const UpdateComponent = ({ classes, component }) => {
   return (
     isCurrentUser && (
       <>
-        {/* Update Component Button */}
         <IconButton onClick={() => setOpen(true)}>
           <EditIcon />
         </IconButton>
 
-        {/* Update Component Dialog */}
         <Mutation
-          mutation={UPDATE_COMPONENT_MUTATION}
+          mutation={UPDATE_CODE_MUTATION}
           onCompleted={(data) => {
             console.log({ data });
             setSubmitting(false);
@@ -60,15 +58,13 @@ const UpdateComponent = ({ classes, component }) => {
             setCode("");
           }}
         >
-          {(updateComponent, { loading, error }) => {
+          {(updateCode, { loading, error }) => {
             if (error) return <Error error={error} />;
 
             return (
               <Dialog open={open} className={classes.dialog}>
-                <form
-                  onSubmit={(event) => handleSubmit(event, updateComponent)}
-                >
-                  <DialogTitle>Update Component</DialogTitle>
+                <form onSubmit={(event) => handleSubmit(event, updateCode)}>
+                  <DialogTitle>Update Code</DialogTitle>
                   <DialogContent>
                     <DialogContentText>
                       Update the Title, Description & Code
@@ -100,7 +96,7 @@ const UpdateComponent = ({ classes, component }) => {
                         label="Code"
                         placeholder="Add Code"
                         onChange={(event) => setCode(event.target.value)}
-                        value={code}
+                        value={currentCode}
                         className={classes.textField}
                       />
                     </FormControl>
@@ -118,7 +114,7 @@ const UpdateComponent = ({ classes, component }) => {
                         submitting ||
                         !title.trim() ||
                         !description.trim() ||
-                        !code
+                        !currentCode
                       }
                       type="submit"
                       className={classes.save}
@@ -126,7 +122,7 @@ const UpdateComponent = ({ classes, component }) => {
                       {submitting ? (
                         <CircularProgress className={classes.save} size={24} />
                       ) : (
-                        "Update Component"
+                        "Update Code"
                       )}
                     </Button>
                   </DialogActions>
@@ -140,20 +136,20 @@ const UpdateComponent = ({ classes, component }) => {
   );
 };
 
-const UPDATE_COMPONENT_MUTATION = gql`
-  mutation(
-    $componentId: Int!
+const UPDATE_CODE_MUTATION = gql`
+  mutation (
+    $codeId: Int!
     $title: String
     $code: String
     $description: String
   ) {
-    updateComponent(
-      componentId: $componentId
+    updateCode(
+      codeId: $codeId
       title: $title
       code: $code
       description: $description
     ) {
-      component {
+      code {
         id
         title
         description
@@ -196,4 +192,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(UpdateComponent);
+export default withStyles(styles)(AddCode);

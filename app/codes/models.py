@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 
-class Component(models.Model):
+class Code(models.Model):
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     code = models.CharField(max_length=1000)

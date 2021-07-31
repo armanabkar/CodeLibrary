@@ -2,24 +2,24 @@ import React from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import ExtensionIcon from "@material-ui/icons/Extension";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import Signout from "../Auth/Signout";
 
 const Header = ({ classes }) => {
   return (
-    <AppBar position="static" className={classes.root} color="white">
+    <AppBar
+      position="static"
+      elevation="false"
+      className={classes.root}
+      color="primary"
+    >
       <Toolbar>
-        {/* Title / Logo */}
         <Link to="/" className={classes.grow}>
-          <ExtensionIcon className={classes.logo} />
           <Typography variant="headline" className={classes.logoText} noWrap>
-            ReusableComponents
+            CODE LIBRARY
           </Typography>
         </Link>
-
-        {/* Signout Button */}
         <Signout />
       </Toolbar>
     </AppBar>
@@ -49,7 +49,7 @@ const styles = (theme) => ({
     color: "black",
   },
   logoText: {
-    color: "black",
+    color: "white",
     fontWeight: 500,
   },
 });

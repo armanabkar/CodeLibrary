@@ -46,7 +46,7 @@ const Register = ({ classes, setNewUser }) => {
         <Mutation
           mutation={REGISTER_MUTATION}
           variables={{ username, email, password }}
-          onCompleted={data => {
+          onCompleted={(data) => {
             console.log({ data });
             setOpen(true);
           }}
@@ -54,14 +54,14 @@ const Register = ({ classes, setNewUser }) => {
           {(createUser, { loading, error }) => {
             return (
               <form
-                onSubmit={event => handleSubmit(event, createUser)}
+                onSubmit={(event) => handleSubmit(event, createUser)}
                 className={classes.form}
               >
                 <FormControl margin="normal" required fullWidth>
                   <InputLabel htmlFor="username">Username</InputLabel>
                   <Input
                     id="username"
-                    onChange={event => setUsername(event.target.value)}
+                    onChange={(event) => setUsername(event.target.value)}
                   />
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
@@ -69,7 +69,7 @@ const Register = ({ classes, setNewUser }) => {
                   <Input
                     id="email"
                     type="email"
-                    onChange={event => setEmail(event.target.value)}
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </FormControl>
                 <FormControl margin="normal" required fullWidth>
@@ -77,7 +77,7 @@ const Register = ({ classes, setNewUser }) => {
                   <Input
                     id="password"
                     type="password"
-                    onChange={event => setPassword(event.target.value)}
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </FormControl>
                 <Button
@@ -101,10 +101,9 @@ const Register = ({ classes, setNewUser }) => {
                   variant="outlined"
                   fullWidth
                 >
-                  Previous user? Log in here
+                  Already have an account? Log in here
                 </Button>
 
-                {/* Error Handling */}
                 {error && <Error error={error} />}
               </form>
             );
@@ -112,7 +111,6 @@ const Register = ({ classes, setNewUser }) => {
         </Mutation>
       </Paper>
 
-      {/* Success Dialog */}
       <Dialog
         open={open}
         disableBackdropClick={true}
@@ -140,7 +138,7 @@ const Register = ({ classes, setNewUser }) => {
 };
 
 const REGISTER_MUTATION = gql`
-  mutation($username: String!, $email: String!, $password: String!) {
+  mutation ($username: String!, $email: String!, $password: String!) {
     createUser(username: $username, email: $email, password: $password) {
       user {
         username
@@ -150,7 +148,7 @@ const REGISTER_MUTATION = gql`
   }
 `;
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: "auto",
     display: "block",
@@ -159,37 +157,37 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       width: 400,
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: theme.spacing.unit * 2
+    padding: theme.spacing.unit * 2,
   },
   title: {
     marginTop: theme.spacing.unit * 2,
-    color: theme.palette.openTitle
+    color: theme.palette.openTitle,
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%",
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing.unit,
   },
   submit: {
     marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing.unit * 2,
   },
   icon: {
     padding: "0px 2px 2px 0px",
     verticalAlign: "middle",
-    color: "green"
-  }
+    color: "green",
+  },
 });
 
 export default withStyles(styles)(Register);

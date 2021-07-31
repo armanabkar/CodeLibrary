@@ -3,9 +3,9 @@ import { Query } from "react-apollo";
 import { gql } from "apollo-boost";
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import SearchComponents from "../components/Component/SearchComponents";
-import ComponentList from "../components/Component/ComponentList";
-import CreateComponent from "../components/Component/CreateComponent";
+import SearchCode from "../components/Component/SearchCode";
+import CodeList from "../components/Component/CodeList";
+import CreateCode from "../components/Component/CreateCode";
 import Loading from "../components/Shared/Loading";
 import Error from "../components/Shared/Error";
 
@@ -14,25 +14,24 @@ const App = ({ classes }) => {
 
   return (
     <div className={classes.container}>
-      <SearchComponents setSearchResults={setSearchResults} />
-      <CreateComponent />
-      <Query query={GET_COMPONENTS_QUERY}>
+      <SearchCode setSearchResults={setSearchResults} />
+      <CreateCode />
+      <Query query={GET_CODES_QUERY}>
         {({ data, loading, error }) => {
           if (loading) return <Loading />;
           if (error) return <Error error={error} />;
-          const components =
-            searchResults.length > 0 ? searchResults : data.components;
+          const codes = searchResults.length > 0 ? searchResults : data.codes;
 
-          return <ComponentList components={components} />;
+          return <CodeList codes={codes} />;
         }}
       </Query>
     </div>
   );
 };
 
-export const GET_COMPONENTS_QUERY = gql`
-  query getComponentsQuery {
-    components {
+export const GET_CODES_QUERY = gql`
+  query getCodesQuery {
+    codes {
       id
       title
       description

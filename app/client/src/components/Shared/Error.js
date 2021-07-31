@@ -20,10 +20,10 @@ const Error = ({ classes, error }) => {
   );
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   snackbar: {
-    margin: theme.spacing.unit
-  }
+    margin: theme.spacing.unit,
+  },
 });
 
 export default withStyles(styles)(Error);

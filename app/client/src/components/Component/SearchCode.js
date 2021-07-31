@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 
-const SearchComponents = ({ classes, setSearchResults }) => {
+const SearchCode = ({ classes, setSearchResults }) => {
   const [search, setSearch] = useState("");
   const inputEl = useRef();
 
@@ -21,10 +21,10 @@ const SearchComponents = ({ classes, setSearchResults }) => {
   const handleSubmit = async (event, client) => {
     event.preventDefault();
     const res = await client.query({
-      query: SEARCH_COMPONENTS_QUERY,
+      query: SEARCH_CODE_QUERY,
       variables: { search },
     });
-    setSearchResults(res.data.components);
+    setSearchResults(res.data.codes);
   };
 
   return (
@@ -37,7 +37,7 @@ const SearchComponents = ({ classes, setSearchResults }) => {
             </IconButton>
             <TextField
               fullWidth
-              placeholder="Search All Components"
+              placeholder="Search All Codes"
               InputProps={{
                 disableUnderline: true,
               }}
@@ -55,9 +55,9 @@ const SearchComponents = ({ classes, setSearchResults }) => {
   );
 };
 
-const SEARCH_COMPONENTS_QUERY = gql`
-  query($search: String) {
-    components(search: $search) {
+const SEARCH_CODE_QUERY = gql`
+  query ($search: String) {
+    codes(search: $search) {
       id
       title
       description
@@ -79,4 +79,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(SearchComponents);
+export default withStyles(styles)(SearchCode);

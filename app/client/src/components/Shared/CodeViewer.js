@@ -6,7 +6,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import Highlight, { defaultProps } from "prism-react-renderer";
 
-export default function CodeViewer({ code, component, username }) {
+export default function CodeViewer({ currentCode, code }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -20,7 +20,7 @@ export default function CodeViewer({ code, component, username }) {
   return (
     <div>
       <Button variant="outlined" color="secondary" onClick={handleClickOpen}>
-        Source Code
+        View Code
       </Button>
       <Dialog
         open={open}
@@ -28,9 +28,9 @@ export default function CodeViewer({ code, component, username }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{component}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{code}</DialogTitle>
         <DialogContent>
-          <Highlight {...defaultProps} code={code} language="jsx">
+          <Highlight {...defaultProps} code={currentCode} language="jsx">
             {({ className, style, tokens, getLineProps, getTokenProps }) => (
               <pre className={className} style={style}>
                 {tokens.map((line, i) => (

@@ -11,13 +11,16 @@ import ExpansionPanelActions from "@material-ui/core/ExpansionPanelActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import CodeViewer from "../Shared/CodeViewer";
-import DeleteComponent from "./DeleteComponent";
-import UpdateComponent from "./UpdateComponent";
+import DeleteCode from "./DeleteCode";
+import AddCode from "./AddCode";
 
-const ComponentList = ({ classes, components }) => (
+const CodeList = ({ classes, codes }) => (
   <List>
-    {components.map((component) => (
-      <ExpansionPanel key={component.id}>
+    {codes.map((code) => (
+      <ExpansionPanel
+        key={code.id}
+        style={{ margin: ".5em", borderRadius: "4px" }}
+      >
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <ListItem className={classes.root}>
             <ListItemText
@@ -25,22 +28,22 @@ const ComponentList = ({ classes, components }) => (
                 variant: "subheading",
                 color: "black",
               }}
-              primary={component.title}
-              secondary={"Created by " + component.postedBy.username}
+              primary={code.title}
+              secondary={"Created by " + code.postedBy.username}
             />
             <CodeViewer
-              code={component.code}
-              component={component.title}
-              username={component.postedBy.username}
+              currentCode={code.code}
+              code={code.title}
+              username={code.postedBy.username}
             />
           </ListItem>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
-          <Typography variant="body1">{component.description}</Typography>
+          <Typography variant="body1">{code.description}</Typography>
         </ExpansionPanelDetails>
         <ExpansionPanelActions>
-          <UpdateComponent component={component} />
-          <DeleteComponent component={component} />
+          <AddCode code={code} />
+          <DeleteCode code={code} />
         </ExpansionPanelActions>
       </ExpansionPanel>
     ))}
@@ -62,7 +65,7 @@ const styles = {
     "&:hover": {
       color: "black",
     },
-  }
+  },
 };
 
-export default withStyles(styles)(ComponentList);
+export default withStyles(styles)(CodeList);

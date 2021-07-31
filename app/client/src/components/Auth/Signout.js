@@ -32,11 +32,12 @@ const styles = {
     display: "flex",
   },
   buttonIcon: {
-    marginLeft: "5px",
+    marginLeft: "7px",
     color: "black",
   },
   buttonText: {
     color: "black",
+    fontWeight: "bold",
   },
 };
 

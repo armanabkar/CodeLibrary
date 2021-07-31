@@ -14,31 +14,30 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import ClearIcon from "@material-ui/icons/Clear";
 
-import { GET_COMPONENTS_QUERY } from "../../pages/App";
+import { GET_CODES_QUERY } from "../../pages/App";
 import Error from "../Shared/Error";
 
-const CreateComponent = ({ classes }) => {
+const CreateCode = ({ classes }) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [code, setCode] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const handleUpdateCache = (cache, { data: { createComponent } }) => {
-    const data = cache.readQuery({ query: GET_COMPONENTS_QUERY });
-    const components = data.components.concat(createComponent.component);
-    cache.writeQuery({ query: GET_COMPONENTS_QUERY, data: { components } });
+  const handleUpdateCache = (cache, { data: { createCode } }) => {
+    const data = cache.readQuery({ query: GET_CODES_QUERY });
+    const codes = data.codes.concat(createCode.code);
+    cache.writeQuery({ query: GET_CODES_QUERY, data: { codes } });
   };
 
-  const handleSubmit = async (event, createComponent) => {
+  const handleSubmit = async (event, createCode) => {
     event.preventDefault();
     setSubmitting(true);
-    createComponent({ variables: { title, description, code } });
+    createCode({ variables: { title, description, code } });
   };
 
   return (
     <>
-      {/* Create Component Button */}
       <Button
         onClick={() => setOpen(true)}
         variant="fab"
@@ -48,9 +47,8 @@ const CreateComponent = ({ classes }) => {
         {open ? <ClearIcon /> : <AddIcon />}
       </Button>
 
-      {/* Create Component Dialog */}
       <Mutation
-        mutation={CREATE_COMPONENT_MUTATION}
+        mutation={CREATE_CODE_MUTATION}
         onCompleted={(data) => {
           console.log({ data });
           setSubmitting(false);
@@ -60,15 +58,15 @@ const CreateComponent = ({ classes }) => {
           setCode("");
         }}
         update={handleUpdateCache}
-        // refetchQueries={() => [{ query: GET_COMPONENTS_QUERY }]}
+        // refetchQueries={() => [{ query: GET_CODES_QUERY }]}
       >
-        {(createComponent, { loading, error }) => {
+        {(createCode, { loading, error }) => {
           if (error) return <Error error={error} />;
 
           return (
             <Dialog open={open} className={classes.dialog}>
-              <form onSubmit={(event) => handleSubmit(event, createComponent)}>
-                <DialogTitle>Create Component</DialogTitle>
+              <form onSubmit={(event) => handleSubmit(event, createCode)}>
+                <DialogTitle>Create Code</DialogTitle>
                 <DialogContent>
                   <DialogContentText>
                     Add a Title, Description & Code
@@ -126,7 +124,7 @@ const CreateComponent = ({ classes }) => {
                     {submitting ? (
                       <CircularProgress className={classes.save} size={24} />
                     ) : (
-                      "Add Component"
+                      "Add Code"
                     )}
                   </Button>
                 </DialogActions>
@@ -139,10 +137,10 @@ const CreateComponent = ({ classes }) => {
   );
 };
 
-const CREATE_COMPONENT_MUTATION = gql`
-  mutation($title: String!, $description: String!, $code: String!) {
-    createComponent(title: $title, description: $description, code: $code) {
-      component {
+const CREATE_CODE_MUTATION = gql`
+  mutation ($title: String!, $description: String!, $code: String!) {
+    createCode(title: $title, description: $description, code: $code) {
+      code {
         id
         title
         description
@@ -191,4 +189,4 @@ const styles = (theme) => ({
   },
 });
 
-export default withStyles(styles)(CreateComponent);
+export default withStyles(styles)(CreateCode);

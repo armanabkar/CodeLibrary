@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from graphql import GraphQLError
 
 import graphene
 from graphene_django import DjangoObjectType
